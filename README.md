@@ -1,10 +1,10 @@
-# 📷 Image Filter Tool
+# Image Filter Tool
 
 Un outil Web moderne de traitement d'images en temps réel développé avec **Java** et **Spring Boot**. Cette application permet d'importer une image, d'y appliquer divers filtres visuels (filtres basiques, effets de couleur et filtres style iOS) et de télécharger le résultat instantanément.
 
 ---
 
-## 🚀 Fonctionnalités
+##  Fonctionnalités
 
 - **Upload Drag & Drop** : Déposez directement vos images ou parcourez vos fichiers.
 - **Traitement d'Image Pixels par Pixels** : Algorithmes faits maison en Java pur (`BufferedImage`) sans bibliothèque externe de traitement d'image.
