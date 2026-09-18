@@ -27,6 +27,11 @@ public class ImageFilterService {
             case "vintage" -> applyVintage(originalImage);
             case "flou" -> applyFlou(originalImage);
             case "contours" -> applyContours(originalImage);
+            case "vivid" -> applyVivid(originalImage);
+            case "vividwarm" -> applyVividWarm(originalImage);
+            case "vividcool" -> applyVividCool(originalImage);
+            case "dramatic" -> applyDramatic(originalImage);
+            case "silvertone" -> applySilvertone(originalImage);
             default -> originalImage; // "Original"
         };
 
@@ -186,4 +191,117 @@ public class ImageFilterService {
         }
         return result;
     }
+
+    // 7. Vivid (Éclatant)
+private BufferedImage applyVivid(BufferedImage img) {
+    int width = img.getWidth();
+    int height = img.getHeight();
+    BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Color c = new Color(img.getRGB(x, y));
+            int avg = (c.getRed() + c.getGreen() + c.getBlue()) / 3;
+
+            // Accentuation des écarts à la moyenne (Saturer la couleur)
+            int r = Math.min(255, Math.max(0, c.getRed() + (int) ((c.getRed() - avg) * 0.4)));
+            int g = Math.min(255, Math.max(0, c.getGreen() + (int) ((c.getGreen() - avg) * 0.4)));
+            int b = Math.min(255, Math.max(0, c.getBlue() + (int) ((c.getBlue() - avg) * 0.4)));
+
+            result.setRGB(x, y, new Color(r, g, b).getRGB());
+        }
+    }
+    return result;
+}
+
+// 8. Vivid Warm (Éclatant Chaud)
+private BufferedImage applyVividWarm(BufferedImage img) {
+    int width = img.getWidth();
+    int height = img.getHeight();
+    BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Color c = new Color(img.getRGB(x, y));
+            
+            // Boost Rouge/Vert (Chaleur) et réduction léger du Bleu
+            int r = Math.min(255, (int) (c.getRed() * 1.15) + 10);
+            int g = Math.min(255, (int) (c.getGreen() * 1.05) + 5);
+            int b = Math.max(0, (int) (c.getBlue() * 0.85));
+
+            result.setRGB(x, y, new Color(r, g, b).getRGB());
+        }
+    }
+    return result;
+}
+
+// 9. Vivid Cool (Éclatant Froid)
+private BufferedImage applyVividCool(BufferedImage img) {
+    int width = img.getWidth();
+    int height = img.getHeight();
+    BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Color c = new Color(img.getRGB(x, y));
+
+            // Boost du Bleu et légère baisse du Rouge
+            int r = Math.max(0, (int) (c.getRed() * 0.88));
+            int g = Math.min(255, (int) (c.getGreen() * 1.02));
+            int b = Math.min(255, (int) (c.getBlue() * 1.2) + 15);
+
+            result.setRGB(x, y, new Color(r, g, b).getRGB());
+        }
+    }
+    return result;
+}
+
+// 10. Dramatic (Dramatique)
+private BufferedImage applyDramatic(BufferedImage img) {
+    int width = img.getWidth();
+    int height = img.getHeight();
+    BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Color c = new Color(img.getRGB(x, y));
+            int avg = (c.getRed() + c.getGreen() + c.getBlue()) / 3;
+
+            // Désaturation partielle
+            int r = (c.getRed() + avg) / 2;
+            int g = (c.getGreen() + avg) / 2;
+            int b = (c.getBlue() + avg) / 2;
+
+            // Fort contraste
+            r = Math.min(255, Math.max(0, (int) (128 + 1.4 * (r - 128))));
+            g = Math.min(255, Math.max(0, (int) (128 + 1.4 * (g - 128))));
+            b = Math.min(255, Math.max(0, (int) (128 + 1.4 * (b - 128))));
+
+            result.setRGB(x, y, new Color(r, g, b).getRGB());
+        }
+    }
+    return result;
+}
+
+// 11. Silvertone (Argenté / N&B iPhone)
+private BufferedImage applySilvertone(BufferedImage img) {
+    int width = img.getWidth();
+    int height = img.getHeight();
+    BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            Color c = new Color(img.getRGB(x, y));
+            int gray = (int) (0.299 * c.getRed() + 0.587 * c.getGreen() + 0.114 * c.getBlue());
+
+            // Courbe de contraste S-curve simple pour l'effet argenté
+            double normalized = gray / 255.0;
+            double curved = Math.pow(normalized, 1.3) * 255.0; // ombres enrichies
+            int silver = Math.min(255, Math.max(0, (int) curved));
+
+            result.setRGB(x, y, new Color(silver, silver, silver).getRGB());
+        }
+    }
+    return result;
+}
 }
