@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outil de Filtrage d'Images</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Outil de Filtrage d'Images</h1>
+            <p>Appliquez des filtres visuels en temps réel sans stockage sur serveur.</p>
+        </header>
+
+        <main>
+            <!-- Zone de téléversement -->
+            <section class="upload-section">
+                <div class="drop-zone" id="dropZone">
+                    <p>Glissez et déposez une image ici ou <span class="browse-btn">parcourez</span></p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+            </section>
+
+            <!-- Zone de sélection des filtres -->
+            <section class="controls-section">
+                <h3>Choisissez un filtre :</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="Original">Original</button>
+                    <button class="filter-btn" data-filter="Mono">Mono</button>
+                    <button class="filter-btn" data-filter="Noir">Noir</button>
+                    <button class="filter-btn" data-filter="Negatif">Négatif</button>
+                    <button class="filter-btn" data-filter="Vintage">Vintage</button>
+                    <button class="filter-btn" data-filter="Flou">Flou</button>
+                    <button class="filter-btn" data-filter="Contours">Contours</button>
+                </div>
+            </section>
+
+            <!-- Prévisualisation et Téléchargement -->
+            <section class="preview-section">
+                <div class="image-container">
+                    <div class="image-box">
+                        <h4>Image Originale</h4>
+                        <img id="originalPreview" src="" alt="En attente d'image..." class="hidden">
+                    </div>
+                    <div class="image-box">
+                        <h4>Image Filtrée</h4>
+                        <img id="filteredPreview" src="" alt="En attente de traitement..." class="hidden">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <a id="downloadBtn" class="download-btn hidden" download="image-filtree.png">Télécharger l'image</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
